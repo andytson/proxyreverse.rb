@@ -7,11 +7,24 @@ $:.unshift(proxyreverse_path) if File.directory?(proxyreverse_path) && !$:.inclu
 
 require 'proxyreverse'
 
+default_options = {
+  :backend_host => '127.0.0.1',
+  :backend_port => '80',
+  :host => '0.0.0.0',
+  :port => '80',
+  :rewrite_domain => false,
+  :verbose => false
+}
+
 options = {}
 
 begin
   cmd_args = OptionParser.new do |opts|
     opts.banner = 'Usage: proxyreverse [options] [PORT] [BACKEND]'
+
+    opts.on('-r', '--rewrite-domain HOST', 'Domain to rewrite, .domain will include sub-domains') do |domain|
+      options[:rewrite_domain] = domain
+    end
 
     opts.on('-v', '--[no-]verbose', 'Run verbosely') do |v|
       options[:verbose] = v
@@ -40,7 +53,7 @@ options[:port] = cmd_args[0]
 if cmd_args[1] =~ /^\d+$/
   options[:backend_port] = cmd_args[1]
 elsif cmd_args[1] =~ /^([^:]+)(?::(\d+))?/
-  options[:rewrite_host] = true
+  default_options[:rewrite_domain] = $1
   options[:backend_host] = $1
   options[:backend_port] = $2
 else
@@ -50,14 +63,5 @@ end
 
 options[:version] = ProxyReverse::VERSION
 options.delete_if { |k, v| v.nil? }
-
-default_options = {
-  :backend_host => '127.0.0.1',
-  :backend_port => '80',
-  :host => '0.0.0.0',
-  :port => '80',
-  :rewrite_host => false,
-  :verbose => false
-}
 
 ProxyReverse::Client.run(default_options.merge(options))

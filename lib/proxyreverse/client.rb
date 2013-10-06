@@ -33,6 +33,12 @@ module ProxyReverse
       @responses = {}
       transferEncoding = 'identity'
 
+      if @options[:rewrite_domain][0] == '.'
+        @options['regex'] = "(https?:\\/\\/)([a-z\.]+\\.)?#{Regexp.escape(@options[:rewrite_domain][1..-1])}"
+      else
+        @options['regex'] = "(https?:\\/\\/)#{Regexp.escape(@options[:rewrite_domain])}"
+      end
+
       server :srv, :host => @options[:backend_host], :port => @options[:backend_port]
     end
     

@@ -22,7 +22,7 @@ module ProxyReverse
       @host = @headers['Host']
       @transferEncoding = 'identity'
 
-      if @client.options[:rewrite_host]
+      if @client.options[:rewrite_domain]
         @headers['Host'] = @client.options[:backend_host]
       end
       

@@ -24,8 +24,8 @@ module ProxyReverse
       @transferEncoding = 'identity'
       @contentEncoding = 'identity'
 
-      if @client.options[:rewrite_host] && @headers.has_key?('Location')
-        @headers['Location'] = @headers['Location'].sub(/^(https?:\/\/)#{Regexp.escape(@client.options[:backend_host])}/, "\\1#{@request.host}")
+      if @client.options[:rewrite_domain] && @headers.has_key?('Location')
+        @headers['Location'] = @headers['Location'].sub(/^#{@client.options['regex']}/, "\\1#{@request.host}")
       end
 
       if @headers.has_key?('Content-Encoding')
@@ -61,7 +61,7 @@ module ProxyReverse
       when 'deflate'
         @body = Zlib::Inflate.inflate(@body)
       end
-      @body = @body.gsub(/(https?:\/\/)#{Regexp.escape(@client.options[:backend_host])}/, "\\1#{@request.host}")
+      @body = @body.gsub(/#{@client.options['regex']}/, "\\1#{@request.host}")
       
       case @contentEncoding
       when 'gzip'
