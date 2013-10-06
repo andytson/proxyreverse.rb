@@ -18,7 +18,7 @@ and type:
 Assuming that you are running your local web-server on a VM with a host-only
 interface with local access via http://my.dev/
 
-    $ proxyremote 8080 my.dev
+    $ proxyreverse 8080 my.dev
     http://my.dev is now publicly available via:
     http://localhost:8080/
 
