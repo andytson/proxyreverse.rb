@@ -26,6 +26,10 @@ begin
       options[:rewrite_domain] = domain
     end
 
+    opts.on('-s', '--rewrite-subdomains', 'Rewrite all subdomains') do |domain|
+      options[:rewrite_domain] = :subdomains
+    end
+
     opts.on('-v', '--[no-]verbose', 'Run verbosely') do |v|
       options[:verbose] = v
     end

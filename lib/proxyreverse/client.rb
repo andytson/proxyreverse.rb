@@ -32,6 +32,10 @@ module ProxyReverse
       @options = options
       @responses = {}
       transferEncoding = 'identity'
+      
+      if @options[:rewrite_domain] == :subdomains
+        @options[:rewrite_domain] = "." + @options[:backend_host].sub(/^www./, '')
+      end
 
       if @options[:rewrite_domain][0] == '.'
         @options['regex'] = "(https?:\\/\\/)([a-z\.]+\\.)?#{Regexp.escape(@options[:rewrite_domain][1..-1])}"
