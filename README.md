@@ -11,7 +11,7 @@ ProxyReverse is a tool that runs on the command line.
 On any system with [ruby] and [rubygems] installed, open your terminal
 and type:
 
-    $ gem install proxyreverse.gem
+    $ gem install proxyreverse
 
 ## Usage
 
