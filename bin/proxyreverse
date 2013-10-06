@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+begin
+  require 'proxyreverse/command'
+rescue LoadError
+  proxyreverse_path = File.expand_path('../../lib', __FILE__)
+  $:.unshift(proxyreverse_path) if File.directory?(proxyreverse_path) && !$:.include?(proxyreverse_path)
+  require 'proxyreverse/command'
+end
+
