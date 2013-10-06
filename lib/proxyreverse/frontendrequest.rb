@@ -40,7 +40,7 @@ module ProxyReverse
     end
   
     def on_body(chunk)
-      client.relay_to_servers(chunk)
+      @client.relay_to_servers(chunk)
     end
   
     def on_message_complete
